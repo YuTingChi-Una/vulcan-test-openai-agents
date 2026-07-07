@@ -13,11 +13,6 @@ analytics_mcp = MCPServerSse(
     params={"url": "http://localhost:8030/sse"},
 )
 
-brave_search_mcp = MCPServerSse(
-    name="Brave Search Server",
-    params={"url": "http://localhost:8040/sse"},
-)
-
 # ===== TOOLS =====
 @function_tool
 def read_file(filepath: str) -> str:
@@ -71,12 +66,4 @@ notification_agent = Agent(
     model="gpt-4o-mini",
     tools=[read_file],
     mcp_servers=[analytics_mcp],
-)
-
-search_agent = Agent(
-    name="SearchAgent",
-    instructions="You are a search specialist. Find relevant information.",
-    model="gpt-4o",
-    tools=[read_file],
-    mcp_servers=[brave_search_mcp],
 )
