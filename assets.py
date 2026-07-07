@@ -22,19 +22,10 @@ def summarize_text(text: str) -> str:
       """Summarize the given text into key bullet points."""
       return f"Summary: {text[:200]}"
 
-@function_tool
-def send_email(to: str, subject: str, body: str) -> str:
-      """Send an email to the specified recipient."""
-      return f"Email sent to {to}"
-
 # ===== MCP SERVER =====
 filesystem_mcp = MCPServerStdio(
       name="FilesystemServer",
       params={"command": "npx", "args": ["-y", "@modelcontextprotocol/server-filesystem", "/tmp"]},
-)
-brave_search_mcp = MCPServerStdio(
-      name="BraveSearchServer",
-      params={"command": "npx", "args": ["-y", "@modelcontextprotocol/server-brave-search"]},
 )
 
 # ===== OTHER =====
