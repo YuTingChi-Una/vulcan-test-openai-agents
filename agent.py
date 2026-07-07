@@ -33,16 +33,6 @@ def summarize_text(text: str) -> str:
                           """
           return f"Summary: {text[:200]}"
 
-@function_tool
-def send_notification(message: str, channel: str = "slack") -> str:
-          """Send a notification message to the specified channel.
-
-              Args:
-                      message: The notification message to send.
-                              channel: Target channel - slack, email, or teams.
-                                  """
-          return f"Notification sent to {channel}: {message}"
-
 # ===== AGENTS =====
 research_agent = Agent(
           name="ResearchAgent",
@@ -50,14 +40,6 @@ research_agent = Agent(
           model="gpt-4o",
           tools=[web_search, summarize_text],
           mcp_servers=[knowledge_base_mcp],
-)
-
-summary_agent = Agent(
-          name="SummaryAgent",
-          instructions="You are a summarization assistant. Condense research into clear bullet points.",
-          model="gpt-4o-mini",
-          tools=[summarize_text, send_notification],
-          mcp_servers=[filesystem_mcp],
 )
 
 writer_agent = Agent(
