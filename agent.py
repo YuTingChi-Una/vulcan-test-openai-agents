@@ -1,14 +1,9 @@
 """Agent definitions for vulcan-test-openai-agents."""
 from agents import Agent, Runner
-from agents.mcp import MCPServerStdio, MCPServerStreamableHttp
+from agents.mcp import MCPServerStreamableHttp
 from agents import function_tool
 
 # ===== MCP SERVERS =====
-filesystem_mcp = MCPServerStdio(
-          name="Filesystem Server",
-          params={"command": "npx", "args": ["-y", "@modelcontextprotocol/server-filesystem", "/tmp"]},
-)
-
 knowledge_base_mcp = MCPServerStreamableHttp(
           name="Knowledge Base Server",
           params={"url": "http://localhost:8010/mcp"},
@@ -40,12 +35,4 @@ research_agent = Agent(
           model="gpt-4o",
           tools=[web_search, summarize_text],
           mcp_servers=[knowledge_base_mcp],
-)
-
-writer_agent = Agent(
-          name="WriterAgent",
-          instructions="You are a content writer. Produce clear and engaging articles from research.",
-          model="gpt-4o",
-          tools=[web_search],
-          mcp_servers=[filesystem_mcp],
 )
