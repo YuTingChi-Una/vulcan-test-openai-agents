@@ -1,9 +1,14 @@
 from agents import Agent, function_tool
+from agents.mcp import MCPServerStdio
 
 # ===== AGENT =====
 research_agent = Agent(
       name="ResearchAgent",
       instructions="You are a research assistant. Gather and summarize information.",
+)
+writer_agent = Agent(
+      name="WriterAgent",
+      instructions="You are a writer. Produce clear and engaging content.",
 )
 
 # ===== TOOL =====
@@ -16,6 +21,12 @@ def web_search(query: str) -> str:
 def summarize_text(text: str) -> str:
       """Summarize the given text into key bullet points."""
       return f"Summary: {text[:200]}"
+
+# ===== MCP SERVER =====
+filesystem_mcp = MCPServerStdio(
+      name="FilesystemServer",
+      params={"command": "npx", "args": ["-y", "@modelcontextprotocol/server-filesystem", "/tmp"]},
+)
 
 # ===== OTHER =====
 class DataTransformer:
